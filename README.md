@@ -1,19 +1,19 @@
-#QUB CIT Final Year Project
+# QUB CIT Final Year Project
 
-##Authors
+## Authors
 John Woodburn
 
-##Language
+## Language
 ReactJS
 
-##Libraries 
+## Libraries 
 React-Bootstrap
 NPM
 
-##Database
+## Database
 MongoDB
 
-##Features
+## Features
 Login/ Register
 Update/ Delete Account
 View Accounts (User's Items, Reserved Items)
