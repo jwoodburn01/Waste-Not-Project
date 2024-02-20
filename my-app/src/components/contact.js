@@ -31,7 +31,7 @@ function Contact(props) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/get/chat/msg/${userInfo._id}`)
+      .get(`http://localhost:3001/get/chat/msg/${userInfo?._id}`)
       .then((recentProfilesId) => {
         setRecentProfileId(recentProfilesId.data);
       })
@@ -143,7 +143,7 @@ const reversed = recentProfiles.reverse(); // reversing the profiles so it will 
     <Row>
       <Col sm={4}>
         <div className="mainContactContainer">
-          {userInfo.type == "admin" ? (
+          {userInfo?.type == "admin" ? (
             <div style={{ width: "20px", padding: "10px" }}>
               <input
                 type="search"
@@ -160,11 +160,11 @@ const reversed = recentProfiles.reverse(); // reversing the profiles so it will 
           )} ;
 
           <div className="userDetailsContainer">
-            {userInfo.type == "admin" ? (
+            {userInfo?.type == "admin" ? (
               <>
                 {profile?.map((user) => (
                   <div>
-                    {user?._id !== userInfo._id ? (
+                    {user?._id !== userInfo?._id ? (
                       <div
                         key={user?.id}
                         className="userContainer"
