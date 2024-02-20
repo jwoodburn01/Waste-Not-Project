@@ -1,0 +1,643 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fcfcfc;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.navbar {
+  height: 60px;
+  background-color: #fef7e5;
+  position: relative;
+}
+
+
+.nav-elements {
+}
+
+.nav-elements ul {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+}
+
+.nav-elements ul li:not(:last-child) {
+  margin-right: 60px;
+}
+
+.nav-elements ul a {
+  font-size: 16px;
+  font-weight: 400;
+  color: #2f234f;
+  text-decoration: none;
+}
+
+.nav-elements ul a.active {
+  color: #574c4c;
+  font-weight: 500;
+  position: relative;
+}
+
+.nav-elements ul a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #574c4c;
+}
+
+.menuIcon {
+  display: none;
+}
+
+@media (max-width: 990px) {
+  .menuIcon {
+    display: block;
+    cursor: pointer !important;
+    z-index: 2;
+  }
+
+  .nav-elements {
+    position: absolute;
+    right: 0;
+    top: 60px;
+    background-color: #fef7e5;
+    width: 0px;
+    height: calc(100vh - 60px);
+    transition: all 0.3s ease-in;
+    overflow: hidden;
+    z-index: 2;
+
+  }
+
+  .nav-elements.active {
+    width: 270px;
+    z-index: 2;
+
+  }
+
+  .nav-elements ul {
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+
+  }
+
+  .nav-elements ul li {
+    margin-right: unset;
+    margin-top: 22px;
+    z-index: 2;
+
+  }
+}
+
+.readNowButton{
+  position: relative;
+
+}
+
+.divStyle {
+  display: 'flex';
+  align-items: 'center';
+  justify-content: 'center';
+  background-size: 'cover';
+  height: '40%';
+}
+
+.spanStyle{
+  padding: '20px';
+  background: '#efefef';
+  color: '#000000';
+}
+
+.newsTitleCol{
+  width: 400px;
+  display: flex;
+}
+
+
+.App {
+  background-color: white;
+}
+
+.Auth-form-container {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  padding: 20%;
+}
+
+.Auth-form {
+  width: 420px;
+  box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  border-radius: 8px;
+  background-color: white;
+}
+
+.Auth-form-content {
+  padding-left: 12%;
+  padding-right: 12%;
+}
+
+.Auth-form-title {
+  text-align: center;
+  margin-bottom: 1em;
+  font-size: 24px;
+  color: rgb(34, 34, 34);
+  font-weight: 800;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(34, 34, 34);
+}
+
+.loginImageDisplay{
+  width: 100%;
+  height: 100%;
+  object-fit:cover;
+}
+
+#googleMapsEmbed{
+  width:100%;
+  height: 100%; 
+  border:0;
+}
+
+.heading{
+  padding: 10px;
+  padding-left: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.localCharityRow{
+  padding-top: 10px;
+}
+
+.itemCard{
+  width: 18rem !important;
+  /* height: fit-content !important;  */
+  text-align: center;
+  padding: 1rem;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  
+} 
+
+.cardImage{
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.loadingSpinner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.iconButton{
+  cursor: pointer;
+}
+
+.chatListCol{
+  /* background-color: #fef7e5; */
+  
+  width: auto;
+  height: 500px;
+
+}
+
+.chatCol{
+  background-color: #fef7e5;
+  border-left: solid 1px;
+  border-color: black;
+
+}
+.chatBox{
+  /* padding:5px; */
+  border: solid 1px;
+  border-color: black;
+}
+
+.messagesPage{
+  padding: 5px;
+}
+
+.messagesListItem{
+  background-color: #fef7e5;
+  height: 20%;
+  border-bottom: solid 1px;
+  border-color: black;
+  padding: 2%;
+}
+
+.itemListings {
+  padding:10px;
+}
+.messagesPage{
+  display: flex;
+}
+
+.mainContactContainer{
+  /* display: flex; */
+  flex: 0.7;
+  background-color: grey;
+  height: 100vh;
+}
+
+.mainChatContainer{
+  flex: 2.8;
+}
+
+.searchMessagesBar{
+  width: 28vw;
+  height: 5vh;
+  border-radius: 10px;
+  border: none;
+  margin-left: 8px;
+}
+
+.chatUserImage{
+  width: 7vh;
+  height: 7vh;
+  /* margin-top: 1vh;
+  margin-bottom: 1vh; */
+  text-align: center;
+  margin-left: 1vh;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userContainer{
+  display: flex;
+  margin-left:18px;
+  margin-right: 18px;
+  background-color: #fef7e5;
+  padding: 5px;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+
+.userDetailsContainer{
+  height: 80vh;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.userProfileImage{
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.chatProfileImage{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: 10px;
+}
+
+.chatMsgContainer{
+  height: 70vh;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.msgInput{
+  width: 60pc;
+  padding: 10px;
+  /* margin-right: 280px; */
+  /* height: 6vh; */
+  margin-top: 0px;
+  background-color: gray;
+  color: white;
+  border: none;
+ 
+}
+
+.msgInput::placeholder{
+ color: white;
+}
+
+.msgSendContainer{
+  display: flex;
+  width: 120vh;
+  background-color: gray;
+  margin-top: 20px;
+  padding: 5px;
+  margin-left: 30px;
+  border-radius: 10px;
+}
+
+.sendButton{
+  width: 130px;
+  height: 43px;
+  margin-top: 0px;
+  border: none;
+  background-color: #fef7e5;
+  border-radius: 10px;
+}
+
+.msg{
+  display:flex;
+  align-items:center;
+  margin-left:30px;
+  background-color:#fef7e5;
+  margin-top:10px;
+  padding:3px;
+  border-radius:10px;
+  width:40%;
+  margin-top:10px;
+}
+
+.msgText{
+  text-align: start;
+  margin-left: 10px;
+}
+
+.msgReply{
+  display:flex;
+  align-items:center;
+  margin-left:70vh;
+  background-color:#fef7e5;
+  margin-top:10px;
+  padding:3px;
+  border-radius:10px;
+  width:40%;
+  margin-top:10px;
+}
+
+.chatLanding{
+  margin-left: 40px;
+  padding: 50px;
+}
+
+.chatLandingText{
+  font-family: 'Poppins', sans-serif;
+  font-size: 30px;
+  text-align: center;
+ 
+}
+.backgroundVideo{
+  width: 100%;
+  object-fit:cover;
+  position:static;
+}
+
+.homeVideoContent{
+  position: absolute;
+  width: 100%;
+  height:100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  z-index: 1;
+}
+
+.overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 99.5%;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 0;
+}
+
+.videoWrapper {
+  position: relative;
+}
+
+.homeIcon{
+  width: 100%;
+  height: 20%;
+  align-items: center;
+}
+
+.homeIconText{
+  text-align: center;
+}
+
+.homeIconsRow{
+  position: flex;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  height: 40vh;
+}
+
+/* .homePageItems{
+  align-items: center;
+} */
+
+.profilePageIcon{
+  width: 3%;
+  height: 20%;
+  align-items: right;
+  cursor: pointer;
+  /* margin-left: 135vh; */
+}
+
+.profilePageEditIcon{
+  width: 3vh;
+  height: 3vh;
+  align-items: left;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.pageButtonStyling {
+  width: 17vh !important; 
+  border-radius: 20px !important;
+  margin-right: 2vh !important;
+
+}
+
+.navLogo{
+  width: 70px;
+  cursor: pointer;
+}
+
+.logoImage{
+  width: 110vh;
+  height: 60vh;
+  z-index: 1;
+}
+
+.itemPageReserveButton{
+  width: 15vh !important; 
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.divider{
+  height: 1px;
+  background: black;
+  width: 90%;
+  /* align-items: center; */
+
+}
+
+.seeMoreText{
+  cursor: pointer;
+  margin-top: -2vh;
+  padding: 10px;
+  padding-left: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+.profileImage{
+  /* width: 50vh;
+  height: 40ch; */
+  /* border-radius: 50%; */
+  object-fit: cover;
+}
+
+.ItemPageIconProfile{
+  width: 7vh;
+  height: 4vh;
+  align-items: right;
+  cursor: pointer;
+  padding-left: 0px;
+  margin-top: 2vh;
+}
+.ItemPageIconMessage{
+  width: 7vh;
+  height: 5vh;
+  align-items: right;
+  cursor: pointer;
+  padding-left: 1vh;
+ margin-top: 2vh;
+}
+
+.itemPageCard{
+  width: 100vh !important;
+  height: fit-content !important; 
+  margin-left: 2vh;
+  margin-right: 2vh; 
+}
+
+.itemCardImage{
+  width: auto !important;
+  height: 80vh !important;
+  object-fit:contain;
+  padding: 1vh;
+}
+
+.detailsCard{
+  margin-top: 1vh;
+
+}
+
+.itemPageEmail{
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  cursor: pointer;
+  width: 5vh;
+  height: 3vh;
+}
+
+.profileImageCard{
+  width: 100vh !important;
+  height: fit-content !important; 
+  margin-left: 2vh;
+  margin-right: 2vh; 
+  margin-top: 2px;
+}
+
+.profileCardImage{
+  /* width: auto !important;
+  height: fit-content !important;
+  object-fit:contain;
+  padding: 1vh; */
+  width: auto !important;
+  height: 30vh !important;
+  object-fit:contain;
+  padding: 1vh;
+}
+
+.footerLogo{
+  width: 50vh !important;
+  margin-right: 60vh;
+  margin-left: -10vh;
+
+}
+
+.footerContactIcon{
+  margin-right: 5px;
+}
+
+.usersListContainer {
+  display: flex;
+  align-items: center;
+  margin-left:18px;
+  margin-right: 18px;
+  background-color: #fef7e5;
+  padding: 5px;
+  border-radius: 10px;
+  margin-top: 3vh;
+
+}
+
+.deleteUserIcon {
+   margin-top: 3vh;
+   margin-left: 1vh;
+   width: 5vh;
+   cursor: pointer;
+}
+
+.hoverContainer{
+  position: absolute;
+  z-index: 3;
+  height: 100%;
+  width: 100%;
+  background: black;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.5;
+  padding: -1rem;
+  left: -1px;
+  top: -1px;
+}
+
+.disabledSpoilerContainer{
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.charityDelete{
+  margin-left: 1vh;
+}
+
+.binCardIcon{
+  justify-content: center;
+}

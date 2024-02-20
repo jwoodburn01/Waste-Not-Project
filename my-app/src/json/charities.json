@@ -1,0 +1,32 @@
+[
+{
+    "name":"South Belfast Foodbank",
+    "description":"Foodbank based in South Belfast who are supported by the Trussell Trust. They take financial donations as well as food and take volunteers.",
+    "link":"https://southbelfast.foodbank.org.uk/",
+    "location":"South Belfast"
+},
+{
+    "name":"South-West Belfast Foodbank",
+    "description":"They provide three days’ nutritionally balanced emergency food and support to local people who are referred to us in crisis. They are part of a nationwide network of foodbanks, supported by The Trussell Trust, working to combat poverty and hunger across the UK",
+    "link":"https://southwestbelfast.foodbank.org.uk/",
+    "location":"South-West Belfast"
+},
+{
+    "name":"North Belfast Foodbank",
+    "description":"Based in North Belfast, supported by the Trussell Trust. They provide three days’ nutritionally balanced emergency food and support to local people who are referred to us in crisis.",
+    "link":"https://northbelfast.foodbank.org.uk/",
+    "location":"North Belfast"
+},
+{
+    "name":"The People's Kitchen Belfast",
+    "description":"Once a soup kitchen this foodbank now does homeless outreach, food parcels as well as hot food and drinks. They take financial donations as well as food, toiletries, clothes",
+    "link":"https://peopleskitchenbelfast.org/",
+    "location":"North Belfast"
+},
+{
+    "name":"Walk INN Community Project",
+    "description":"This group believe that different homeless groups have different needs and aim to meet them. They take financial donations to go towards thair aims",
+    "link":"https://balcproject.org.uk/",
+    "location":"Belfast and Lisburn"
+}
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "fName":"John",
+        "lName":"Woodburn",
+        "email":"jwoodburn01@qub.ac.uk",
+        "password":"1",
+        "type":"admin"
+    }
+   
+    ]
