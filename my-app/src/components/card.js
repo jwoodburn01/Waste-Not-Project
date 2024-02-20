@@ -49,9 +49,6 @@ const CardComponent = (props) => {
   let deleteButton;
   if (userInfo && userInfo.type == "admin") {
     deleteButton = (
-      // <Button variant="danger" onClick={deleteItem}>
-      //   Delete
-      // </Button>
       <FaTrashCan onClick={deleteItem} style={{width:'4vh', height:'4vh'}}/>
     );
   } else {
