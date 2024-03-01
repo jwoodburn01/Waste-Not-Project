@@ -82,7 +82,7 @@ const CardComponent = (props) => {
   if (viewList) {
     return (
       <Card
-        style={{ width: "80%", padding: "1vh", marginTop: "1vh", left: "10%" }}
+        style={{ width: "80%", padding: "1vh", marginTop: "1vh", left: "10%", cursor: "pointer" }}
       >
         <Row>
           <Col style={{ textAlign: "center" }}>

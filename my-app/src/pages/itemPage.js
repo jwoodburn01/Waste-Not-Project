@@ -203,8 +203,12 @@ return(
   </Card>
   <Card style={{ width: '100%', padding: '1vh', marginTop:'1vh' }}>
         <Row>
-          <Col>
-          <Card.Img variant="bottom" src={postOwner.pic} />
+          <Col style={{display:'flex', justifyContent:'center'}}>
+          <Card.Img variant="bottom" src={postOwner.pic}    style={{
+          width: "auto",
+          height: "25vh",
+          objectFit: "contain",
+        }}/>
           </Col>
           <Col>
               <Card.Body>

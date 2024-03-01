@@ -100,14 +100,6 @@ function ProfilesModal({show, onClose}) {
           ))}
           <Dialog />
         </Modal.Body>
-        {/* <Modal.Footer>
-          <Button variant="secondary" onClick={onClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={onClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer> */}
       </Modal>
     </>
   );

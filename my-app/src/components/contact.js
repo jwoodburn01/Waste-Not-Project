@@ -60,44 +60,6 @@ function Contact(props) {
     }
     console.log(recentProfiles); //shows undefined
   }, [recentUserIds]);
-  // useEffect(() => {
-  //     if (recentUserIds) {
-  //         const fetchUsers = async () => {
-  //             const filteredUsers = await Promise.all(
-  //                 recentUserIds.map(async (ids) => {
-  //                     const response = await axios.get(`http://localhost:3001/getAllProfile/${ids}`);
-  //                     return response.data;
-  //                 })
-  //             );
-  //             setRecentProfile(filteredUsers);
-  //             setRecentProfileSave(filteredUsers);
-  //         };
-
-  //         fetchUsers();
-  //     }
-  // }, [recentUserIds]);
-
-  // useEffect(() => {
-  //     if(recentProfiles && search){
-  //         const flattenedProfiles = recentProfiles.flat(); // flattening the profiles allows me to use profile rather than profile[0]
-  //         setRecentProfile(flattenedProfiles.filter(profile => {
-  //                 const name = `${profile?.fName} ${profile?.lName}`;
-  //                 return name.toLowerCase().includes(search.toLowerCase());
-  //               }));
-
-  //             //   setRecentProfile(filtered);
-  //               console.log(recentProfiles);
-  //     }
-
-  //     if(!search){
-
-  //         setRecentProfile(recentProfilesSave);
-  //     }
-  // }, [search]);
-//   const contactListRef = useRef(recentProfiles);
-//   useEffect(() => {
-//     contactListRef.current = [...recentProfiles].reverse(); 
-//   }, [recentProfiles])
 
 const reversed = recentProfiles.reverse(); // reversing the profiles so it will list in order or recently started a conversation
 
@@ -208,10 +170,10 @@ const reversed = recentProfiles.reverse(); // reversing the profiles so it will 
                   <LoadingSpinner />
                 ) : (
                   <>
+                  
                     {filteredRecentProfiles &&
-                      filteredRecentProfiles?.reverse().map((user) => ( //reversing the order so who the user has started a converation with more recently is shown at the top
+                      filteredRecentProfiles?.filter((user) => user[0]?.fName).reverse().map((user) => ( //filtering will remove undefined users and reversing the order so who the user has started a converation with more recently is shown at the top
                         <div key={user[0]?.id}>
-                          {/* {user[0] && ( */}
                             <div
                               className="userContainer"
                               onClick={(e) => handleUser(user[0])}
