@@ -4,6 +4,7 @@ import { GiWorld } from "react-icons/gi";
 import { MdFamilyRestroom } from "react-icons/md";
 
 function HomePageIcons() {
+    // this file shows 3 columns with icons and text in it to let the users know the facts
     return ( 
         <Row className="homeIconsRow">
                 <Col>

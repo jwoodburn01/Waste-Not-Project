@@ -12,13 +12,16 @@ import { register } from "../actions/userActions"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+// this login page shows the login, register and the forgot password, i used bootstrap forms for this because i wanted to utilise the layout and could have them all in 1 page
 export default function Login(props, history) {
   let [authMode, setAuthMode] = useState("signin")
 
+  // if the user selects the register link/ the sign in link it will change the mode to change the view
   const changeAuthMode = () => {
     setAuthMode(authMode === "signin" ? "signup" : "signin")
   }
 
+  // this changes the auth mode to reset pass so it can show that as well 
   const resetPassword = () => {
     setAuthMode(authMode === "signin" ? "resetPass" : "")
   }
@@ -32,39 +35,30 @@ export default function Login(props, history) {
   const [message, setMessage] = useState("");
   const [loginMessage, setLoginMessage] = useState("");
   const [resetPassEmail, setResetPassEmail] = useState("");
- 
-
   const dispatch = useDispatch();
-
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
-
   const userRegister = useSelector(state => state.userRegister)
   const { loadingReg, errorReg } = userRegister;
   const navigate = useNavigate();
   const emailToast = () => toast.success("Email Sent");
 
-
+  // this submits the register form to let the user create an account, it confirms that the passwords are the same and that all the data exists
   const submitRegister = async (e) => {
     e.preventDefault();
-    console.log(pic)
     if(!fName|| !lName || !email || !password || !confirmPassword){
       setMessage('Please fill in all fields')
     }else{
        if (password !== confirmPassword) {
       setMessage("Passwords do not match")
     } else {
-      dispatch(register(fName, lName, email, password, pic));
-      changeAuthMode();
-
+      dispatch(register(fName, lName, email, password, pic)); // sending the data to the server using the dispatch to the reducer
+      changeAuthMode(); // changes back to a login so the user can then login
     }
     }
-   
-
-
-
   }
 
+  // this sends the login data to the redcer
   const login = async (e) => {
     e.preventDefault();
     if(!email || !password){
@@ -75,6 +69,7 @@ export default function Login(props, history) {
 
   }
 
+  // this will send the correct data to the backend so the user can be emailed about a password reset based on a token they will get for it
   const resetSubmission = async (e) => {
     e.preventDefault();
 fetch("http://localhost:3001/forgotPassword", {
@@ -89,22 +84,19 @@ fetch("http://localhost:3001/forgotPassword", {
     email:resetPassEmail,
   })
 })
-
 .then(((res)=> res.json()),emailToast())
-
 .catch(error => console.error(error));
-
-
   }
 
+  // this sends the user back to the home page if they are logged in
   useEffect(() => {
         const userInfo = localStorage.getItem("userInfo");
-    
         if(userInfo){
           navigate("/")
         }
       }, [navigate,userInfo])
 
+      // signup page
   if (authMode === "signin") {
     return (
 
@@ -114,9 +106,9 @@ fetch("http://localhost:3001/forgotPassword", {
             <form className="Auth-form">
               <div className="Auth-form-content">
                 <h3 className="Auth-form-title">Sign In</h3>
+                {/* will display the error message if the backend send an issue back */}
                 {loginMessage && <ErrorMessage variant="danger">{loginMessage}</ErrorMessage>}
-                {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-                {/* {console.log(error)} */}
+                {error && <ErrorMessage variant="danger">{error}</ErrorMessage>} 
                 {loading && <LoadingSpinner />}
                 <div className="text-center">
                   Not registered yet?{" "}
@@ -172,6 +164,7 @@ fetch("http://localhost:3001/forgotPassword", {
     )
   }
 
+  // register section
   if (authMode === "signup") {
 
     return (
@@ -185,9 +178,7 @@ fetch("http://localhost:3001/forgotPassword", {
               <div className="Auth-form-content">
                 <h3 className="Auth-form-title">Register</h3>
                 {message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
-                {console.log(message)}
                 {errorReg && <ErrorMessage variant="danger">{errorReg}</ErrorMessage>}
-                {console.log(errorReg)}
                 {loadingReg && <LoadingSpinner />}
                 <div className="text-center">
                   Already registered?{" "}
@@ -256,10 +247,11 @@ fetch("http://localhost:3001/forgotPassword", {
       </Row>
     )
   }
+
+  // the reset password section
   if (authMode === "resetPass") {
 
     return (
-
       <Row>
         <Col sm='6'>
           <img className="loginImageDisplay" src={Giving} alt="Thrive"></img>

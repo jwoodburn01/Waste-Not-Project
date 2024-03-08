@@ -11,7 +11,7 @@ function HomeGoodsHomePage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 
-
+  // this gets the list of home goods
   useEffect(() => {
     axios.get(`http://localhost:3001/getHomeGoods?q=${search}`)
       .then(homeGoods => { setHomeGoods(homeGoods.data);
@@ -19,6 +19,7 @@ function HomeGoodsHomePage() {
       .catch(error => console.error(error));
   }, [search]);
 
+  // the reserved goods are left out of the list
   useEffect(() => {
     setAvailableGoods([...homeGoods.filter(goods => goods.reserved === false)])
   }, [homeGoods]);
@@ -37,13 +38,8 @@ function HomeGoodsHomePage() {
               image={homeGoods.image}
               itemLink={event => window.location.href = '/item/' + homeGoods._id}
               location={homeGoods.location}
-
             />
-           
         ))} 
-            
-
-            
         </Row>
      );
 }

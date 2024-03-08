@@ -14,7 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import useConfirm from '../components/confirmDialogue';
 
 function LocalCharities() {
-
+// this page shows all of our charities, it shows them and allows the users to visit their webpages
   const [localCharity, setlocalCharity] = useState([]);
   const unsortedData = localCharity;
   const [sortedData, setSortedData] = useState(unsortedData);
@@ -37,13 +37,14 @@ function LocalCharities() {
     }
   }, [navigate, userInfo])
 
-
+  // this gets the charities from mongo and can be filtered with the search
   useEffect(() => {
     axios.get(`http://localhost:3001/getLocalCharities?q=${search}`)
       .then(localCharity => setlocalCharity(localCharity.data))
       .catch(error => console.error(error));
   }, [search]);
 
+  // is the admin wants to delete a charity the user can hit the delete button the confirm the deletion
   const deleteCharity = async (charity) => {
     setMessage(`Are you sure you want to delete ${charity.name}`);
     const ans = await confirmDelete();
@@ -52,19 +53,16 @@ function LocalCharities() {
         await axios.delete(`http://localhost:3001/removeCharity/${charity._id}`)
         successToast();
       } catch (err) {
-
-        
         failedToast();
         console.log(err);
       }
     } else {
-
+      failedToast();
     }
   };
 
-
+  // sorting by a-z
   const toggleSort = () => {
-    // setSortActive(a => !a);
     if (sortActive) {
       //Unsorting the data by re-sorting it by the _id
       let unsortedData = sortedData.sort((a, b) => {
@@ -102,6 +100,7 @@ function LocalCharities() {
   } else {
     deleteButton = null;
   }
+
   return (
     <Row>
       <Col sm='6' className="loginCol">
@@ -115,15 +114,12 @@ function LocalCharities() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          {/* <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-            <SearchIcon />
-          </IconButton> */}
           {addNewButton}
           <Button className='pageButtonStyling' variant={buttonVariant} onClick={toggleSort}>A-Z</Button>
           <ColoredLine />
-          
         </Row>
         <Dialog />
+        {/*  the map to show the charities in cards */}
         {localCharity.map((localCharity, index) => (
           <Row className='localCharityRow'>
             <Card>
@@ -146,6 +142,7 @@ function LocalCharities() {
         ))};
 
       </Col>
+      {/*  a google maps map showing all the food charities in the belfast area */}
       <Col sm='6'>
         <iframe id="googleMapsEmbed" src="https://www.google.com/maps/embed?pb=!1m12!1m8!1m3!1d591862.0637039257!2d-6.00348!3d54.587058000000006!3m2!1i1024!2i768!4f13.1!2m1!1sfood%20charities%20belfast!5e0!3m2!1sen!2suk!4v1702496368346!5m2!1sen!2suk"></iframe>
       </Col>

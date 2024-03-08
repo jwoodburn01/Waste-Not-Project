@@ -15,11 +15,12 @@ import axios from "axios";
 import ProfilesModal from "./profilesModal";
 import useConfirm from "./confirmDialogue";
 
+// this nav bar will be shown throughout and will allow the user to navigate through my website as well as access functions like remove account and login/out
+// this nav bar can also turn into a side bar depending on the window size
 const NavigationBar = () => {
   const [navOpen, setNavOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const userName = localStorage.getItem("userInfo").fName;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   let profileLink = null;
@@ -39,6 +40,7 @@ const NavigationBar = () => {
     navigate("/messages");
   };
 
+  // this request is shown when users hit the remove account button, it will prompt them to confirm and then will send the admin a message stating that this user will like to delete their account
   const accountRemovalReq = async () => {
     setMessage("Are you sure you want to delete your account?");
     const ans = await confirmDelete();
@@ -54,6 +56,7 @@ const NavigationBar = () => {
     }
   };
 
+  // if the user is logged in they will be shown their first name as the profile and can hit a dropdown to get the my profile page and messages, if they are an admin or not remove account or show user profiles
   if (userInfo) {
     profileLink = (
       <NavDropdown title={userInfo?.fName}>
@@ -88,6 +91,7 @@ const NavigationBar = () => {
     profileLink = <NavLink to="/login">Login/Register</NavLink>;
   }
 
+  // the message icon will change when they login
   if (userInfo) {
     messageIcon = <EmailIcon className="iconButton" onClick={messageNav} />;
   } else {
@@ -102,7 +106,7 @@ const NavigationBar = () => {
         <div className="logo">
           <img
             className="navLogo"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/")} // the logo can be used as a home button
             src={logo}
             alt="Waste Not Logo"
           />

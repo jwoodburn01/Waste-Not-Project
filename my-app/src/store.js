@@ -3,6 +3,9 @@ import {thunk} from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { userLoginReducer, userRegisterReducer, userUpdateReducer } from './reducers/userReducers';
 
+//  this file will deal with the local storage data, including userInfo
+
+// this will allow the reducers to be used with the local storage and let it update
 const reducer = combineReducers({
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,

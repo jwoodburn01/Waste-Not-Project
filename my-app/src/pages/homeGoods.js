@@ -12,7 +12,8 @@ import ColoredLine from "../components/horizontalLine";
 import Dropdown from "react-bootstrap/Dropdown";
 import Help from "../components/helpButton";
 
-function Food() {
+function HomeGoods() {
+  // this file holds the home goods page, similar to the food page other than it filters by categories rather than allergies and the view is different, it user horizontal cards initially 
   const [homeGoods, setHomeGoods] = useState([]);
   const [availableGoods, setAvailableGoods] = useState([]);
   const unsortedData = availableGoods;
@@ -41,12 +42,14 @@ function Food() {
   ];
   const [catSelected, setCatSelected] = useState(null);
 
+  //if user isnt logged in they will be sent to the home page
   useEffect(() => {
     if (!userInfo) {
       navigate("/");
     }
   }, [navigate, userInfo]);
 
+  // this will get the home goods items based on the search, allowing for real time search
   useEffect(() => {
     axios
       .get(`http://localhost:3001/getHomeGoods?q=${search}`)
@@ -57,12 +60,14 @@ function Food() {
       .catch((error) => console.error(error));
   }, [search]);
 
+  // removing unavailable items from the list
   useEffect(() => {
     setAvailableGoods([
       ...homeGoods.filter((goods) => goods.reserved === false),
     ]);
   }, [homeGoods]);
 
+  // sorting by name and changing the button when clicked
   const toggleSort = () => {
     if (sortActive) {
       //Unsorting the data by re-sorting it by the _id
@@ -87,6 +92,7 @@ function Food() {
     }
   };
 
+  // changing the view with a button click
   const toggleView = () => {
     if (viewActive) {
       setButtonVariantList(buttonVariantFilledList);
@@ -99,10 +105,12 @@ function Food() {
     }
   };
 
+  // allowing the filtering to work
   const handleSelect = (eventKey) => {
     setCatSelected(eventKey);
   };
 
+  // this function shows only the category selected
   const filterGoods = () => {
     if (!catSelected) {
       return availableGoods;
@@ -206,4 +214,4 @@ function Food() {
     );
   }
 }
-export default Food;
+export default HomeGoods;

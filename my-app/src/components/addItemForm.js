@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Row, Col } from "react-bootstrap";
 
 function InputItemForm() {
+  // the variables used will be initialised below, the variables for both the allergens and the categories for both sets of items
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -31,10 +32,13 @@ function InputItemForm() {
   const [miscellaneous, setMiscellaneous] = useState(false);
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  // creating the toasts to be used for success and fail
   const successToast = () => toast.success("Item Added");
   const failedToast = () => toast.error("Error, Item Failed to Add");
   const errorToast = () => toast.error("Error, Please fill in all fields");
 
+  // the handle submit below works for both food and home goods
+  // using the type dropdown it uses the different url for each and sends the entered data to it.
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!type || !name || !location) {
@@ -42,6 +46,7 @@ function InputItemForm() {
     } else {
       try {
         if (type === "food") {
+          // food items post
           console.log(shellFish, egg, wheat, nuts, dairy);
           axios.post("http://localhost:3001/addFood", {
             name: name,
@@ -59,6 +64,7 @@ function InputItemForm() {
           });
           successToast();
         } else {
+          // home goods post
           axios.post("http://localhost:3001/addHomeGoods", {
             name: name,
             description: description,
@@ -72,7 +78,7 @@ function InputItemForm() {
             lighting: lighting,
             storage: storage,
             decor: decor,
-            miscellaneous: miscellaneous
+            miscellaneous: miscellaneous,
           });
           successToast();
         }
@@ -80,7 +86,7 @@ function InputItemForm() {
         failedToast();
         console.error(error);
       }
-
+      // resetting the values to blank
       setType("");
       setName("");
       setDescription("");
@@ -90,23 +96,27 @@ function InputItemForm() {
     }
   };
 
+  // the images i have used cloudinary to host the image and it will return the url to be saved in my mongo server as the url
   const postPic = (pics) => {
     if (!pics) {
       return setPicMessage("Please select an image");
     }
     setPicMessage(null);
-
+    // this only accepts a jpeg or a png
     if (pics.type === "image/jpeg" || pics.type === "image/png") {
       const data = new FormData();
+      // these appends make sure it saved to my cloud
       data.append("file", pics);
       data.append("upload_preset", "WasteNot");
       data.append("cloud_name", "diodvhgrg");
+      // the fetch then sends the image to it
       fetch("https://api.cloudinary.com/v1_1/diodvhgrg/image/upload", {
         method: "post",
         body: data,
       })
         .then((res) => res.json())
         .then((data) => {
+          // the returned url is saved to the picture url
           let newPic = data.url.toString();
           setPic(newPic);
         })
@@ -118,6 +128,7 @@ function InputItemForm() {
     }
   };
 
+  // if the type chosen is food it will then display these allergens for the user to choose from
   const allergens = (
     <Form.Group>
       <Form.Label>Allergen Information</Form.Label>
@@ -139,6 +150,7 @@ function InputItemForm() {
     </Form.Group>
   );
 
+  // if the user selects home goods it will display the calegories for the user to choose from from radio buttons to ensure only 1 can be selected
   const categories = (
     <Form.Group>
       <Form.Label>Category Selection</Form.Label>
@@ -188,8 +200,10 @@ function InputItemForm() {
     </Form.Group>
   );
 
+  // this form will be used in both the food and home goods pages so is made universal to save making 1 different forms
   return (
     <>
+      {/* the show button is here so it saves me passing props */}
       <Button
         variant="primary"
         onClick={handleShow}
@@ -234,7 +248,6 @@ function InputItemForm() {
 
               {type === "food" ? allergens : ""}
               {type === "homeGoods" ? categories : ""}
-
 
               <Form.Label>Item Image</Form.Label>
               <Form.Control

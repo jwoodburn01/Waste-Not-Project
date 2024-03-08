@@ -9,7 +9,7 @@ import { updateProfile } from '../actions/userActions';
 import LoadingSpinner from './loading';
 import { MdOutlineEdit } from "react-icons/md";
 
-
+// the update profile will be shown under the profile section and will allow users to edit details in their profile
 function UpdateProfileForm() { 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -28,6 +28,7 @@ function UpdateProfileForm() {
   const {loading, error, success} = userUpdate;
   const id = userInfo._id;
 
+  // it will get the data from whoever is logged in using the userInfo and will display it as the initial data in the form
   useEffect(()=> {
     if(userInfo){
       setfName(userInfo.fName);
@@ -40,12 +41,13 @@ function UpdateProfileForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if(password===confirmPassword){
+    if(password===confirmPassword){ // if the user changes their password or even if they dont it will ensure its entered correctly
       console.log(id);
       dispatch(updateProfile({id, fName, lName, email, password, pic}));
     }
   }
 
+  // same as other forms, will send the image to cloudinary and will be returned a cloudinary url to be saved in mongo
   const postPic = (pics) => {
 
     if(!pics){
@@ -77,11 +79,9 @@ function UpdateProfileForm() {
     }
   }
 
+  // this form will initially show the users details and will allow them to edit them as they wish
   return (
     <>
-      {/* <Button variant="primary" onClick={handleShow} style={{height: '36px', overflow: 'visible'}}>
-        Edit Profile
-      </Button> */}
       <MdOutlineEdit onClick={handleShow} className='profilePageEditIcon'/>
 
       <Modal show={show} onHide={handleClose}>

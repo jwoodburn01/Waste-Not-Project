@@ -12,6 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import Form from 'react-bootstrap/Form';
 import { ToastContainer, toast } from "react-toastify";
 
+// this page is the same as the other profile page but it shows other users profiles if we visit their profile, it will display their items
 function UserProfile() {
   const { id } = useParams();
   const userLogin = useSelector((state) => state.userLogin);
@@ -44,6 +45,7 @@ function UserProfile() {
     }
   }, [navigate, userInfo]);
 
+  // gets the user's profile details
   useEffect(() => {
     axios
       .get(`http://localhost:3001/profileDetails/${id}`)
@@ -51,6 +53,7 @@ function UserProfile() {
       .catch((error) => console.error(error));
   }, [id]);
 
+  // searches for food and home goods
   useEffect(() => {
     axios
       .get(`http://localhost:3001/getFood?q=${search}`)
@@ -69,6 +72,7 @@ function UserProfile() {
       .catch((error) => console.error(error));
   }, [search]);
 
+  // puts items the user owns in an array
   useEffect(() => {
     setAllItems([
       ...food.filter((food) => food.userId === id),
@@ -76,8 +80,8 @@ function UserProfile() {
     ]);
   }, [food, homeGoods]);
 
+  // this reporting function allows a user to report another user if any isues arise, it will allow them to enter in a reason and then send it to the admin for review
   const reportUser = async () => {
-
       let message = `I want to report user: ${profile.email}. Reason: ${reportReason}`;
       try {
         axios.post("http://localhost:3001/msg", {
@@ -92,12 +96,12 @@ function UserProfile() {
         toast.failure("Error: " + error);
         reportFailedToast();
       }
-      
-    
   };
 
+  //
   return (
     <Row>
+      {/* modal for report user */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Report User</Modal.Title>
@@ -120,6 +124,7 @@ function UserProfile() {
           </Button>
         </Modal.Footer>
       </Modal>
+{/* card components to show user details */}
       <Col>
       <Card>
   <Row>
@@ -169,6 +174,7 @@ function UserProfile() {
         </Card>
       </Col>
       <Row>
+        {/* a list of the users current listings displayed in small cards */}
         <h2 className="heading">User's Current Listings</h2>
         {allItems.length > 0 ? (
           <>

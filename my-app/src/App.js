@@ -17,6 +17,7 @@ function App() {
       <BrowserRouter>
         <NavigationBar />
         <Routes>
+          {/* these allow the pages to be viewed and for buttons to work by navigating to these urls */}
             <Route path='/' element={<Home/>}/>
             <Route path='/login' element={<Login/>}/>
             <Route path='/food' element={<Food/>}/>

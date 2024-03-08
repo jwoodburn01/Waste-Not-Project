@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Contact from "../components/contact";
 import { useParams } from "react-router-dom";
+
+// this messages page displays the messages through the Contact and Chat Container
 function Messages() {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;

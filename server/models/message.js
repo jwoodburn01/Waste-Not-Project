@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+// this model is for the messages being sent/ recieved
 const messageSchema = new mongoose.Schema({
     Chatusers:{
         type:Array,
@@ -19,5 +20,6 @@ const messageSchema = new mongoose.Schema({
 }
 )
 
+// this goes to the messages collection in mongo
 const messageModel = mongoose.model("Message", messageSchema, "Message")
 module.exports = messageModel

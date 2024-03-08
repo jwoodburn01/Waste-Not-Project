@@ -8,6 +8,7 @@ import useConfirm from "./confirmDialogue";
 import { ToastContainer, toast } from "react-toastify";
 import { FaTrashCan } from "react-icons/fa6";
 
+// this card component will be shown throughout to display the items on my website
 const CardComponent = (props) => {
   const {
     name,
@@ -30,6 +31,7 @@ const CardComponent = (props) => {
   const successToast = () => toast.success("Item Deleted");
   const failToast = () => toast.error("Failed to Delete Item");
 
+  // this delete item will show up for admins who can delete items they think are misleading or scams
   const deleteItem = async () => {
     setMessage(`Are you sure you want to delete ${name}`);
     const ans = await confirmDelete();
@@ -49,11 +51,16 @@ const CardComponent = (props) => {
   let deleteButton;
   if (userInfo && userInfo.type == "admin") {
     deleteButton = (
-      <FaTrashCan onClick={deleteItem} style={{width:'4vh', height:'4vh'}}/>
+      <FaTrashCan
+        onClick={deleteItem}
+        style={{ width: "4vh", height: "4vh" }}
+      />
     );
   } else {
     deleteButton = null;
   }
+
+  // this allows the allergens to show if the user has selected them in the creation of the item
   const allergenList = [];
 
   if (dairy) {
@@ -74,15 +81,22 @@ const CardComponent = (props) => {
 
   let allergenInfo;
   if (allergenList) {
-    allergenInfo = `Contains: ${allergenList.join(" ,")}`;
+    allergenInfo = `Contains: ${allergenList.join(", ")}`;
   } else {
     allergenInfo = null;
   }
 
+  // if the user changes their view the card setup will change to this, making it horizontal rather than vertical cards
   if (viewList) {
     return (
       <Card
-        style={{ width: "80%", padding: "1vh", marginTop: "1vh", left: "10%", cursor: "pointer" }}
+        style={{
+          width: "80%",
+          padding: "1vh",
+          marginTop: "1vh",
+          left: "10%",
+          cursor: "pointer",
+        }}
       >
         <Row>
           <Col style={{ textAlign: "center" }}>
@@ -113,6 +127,7 @@ const CardComponent = (props) => {
       </Card>
     );
   } else {
+    // the standard card layout
     return (
       <Card className="itemCard col-sm-4">
         <Card.Body className=" d-flex flex-column justify-content-center">
@@ -127,10 +142,7 @@ const CardComponent = (props) => {
             ""
           )}
           <Dialog />
-            <div className="binCardIcon">
-              {deleteButton}
-            </div>
-          
+          <div className="binCardIcon">{deleteButton}</div>
         </Card.Body>
         <Card.Footer>{location}</Card.Footer>
       </Card>

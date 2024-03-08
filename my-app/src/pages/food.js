@@ -14,6 +14,7 @@ import ColoredLine from "../components/horizontalLine";
 import Dropdown from "react-bootstrap/Dropdown";
 import Help from "../components/helpButton";
 
+// this file holds the food page, it will show the search bar and filtering buttons as well as the food items listed
 function Food() {
   const [food, setFood] = useState([]);
   const [availableFood, setAvailableFood] = useState([]);
@@ -34,12 +35,14 @@ function Food() {
   const [viewLabel, setViewLabel] = useState("Card View");
   const [catSelected, setCatSelected] = useState(null);
 
+  // if the user isnt logged in they will be sent back to the home page
   useEffect(() => {
     if (!userInfo) {
       navigate("/");
     }
   }, [navigate, userInfo]);
 
+  // this returns the food items, if there is no search it will return everything and will change when the search is edited
   useEffect(() => {
     axios
       .get(`http://localhost:3001/getFood?q=${search}`)
@@ -50,12 +53,13 @@ function Food() {
       .catch((error) => console.error(error));
   }, [search]);
 
+  // this will remove any items that have been reserved, to only show available items
   useEffect(() => {
     setAvailableFood([...food.filter((item) => item.reserved === false)]);
   }, [food]);
 
+  // this will sort the data by name and also change the button type so the user can see when the data is filtered
   const toggleSort = () => {
-    // setSortActive(a => !a);
     if (sortActive) {
       //Unsorting the data by re-sorting it by the _id
       let unsortedData = sortedData.sort((a, b) => {
@@ -63,7 +67,7 @@ function Food() {
         if (a._id > b._id) return 1;
         return 0;
       });
-      setButtonVariant(buttonVariantOutline);
+      setButtonVariant(buttonVariantOutline); // sets the button type
       setSortedData(unsortedData);
       setSortActive((a) => !a);
     } else {
@@ -72,12 +76,13 @@ function Food() {
         if (a.name > b.name) return 1;
         return 0;
       });
-      setButtonVariant("success");
+      setButtonVariant("success"); // sets the button type to filled
       setSortedData(sortedData);
       setSortActive((a) => !a);
     }
   };
 
+  // the toggle view will change the card type to let the user see both horizontal cards and vertical ones
   const toggleView = () => {
     if (viewActive) {
       setButtonVariantList(buttonVariantOutlineList);
@@ -90,10 +95,12 @@ function Food() {
     }
   };
 
+  // this will let the user filter by allergens
   const handleSelect = (eventKey) => {
     setCatSelected(eventKey);
   };
 
+  // will show ones not selected so the user can hide what they are alergic too
   const filterFood = () => {
     if (!catSelected) {
       return availableFood;
@@ -138,7 +145,10 @@ function Food() {
             />
 
             <ButtonGroup style={{ width: "78vh" }}>
-              <InputItemForm />
+              {/* Add item form */}
+              <InputItemForm /> 
+
+              {/* Filtering by name button */}
               <Button
                 variant={buttonVariant}
                 onClick={toggleSort}
@@ -154,6 +164,7 @@ function Food() {
                 {viewLabel}
               </Button>
 
+              {/* Dropdown for the allergens */}
               <Dropdown onSelect={handleSelect}>
                 <Dropdown.Toggle
                   variant="success"
@@ -169,7 +180,9 @@ function Food() {
                   <Dropdown.Item eventKey="Eggs">Eggs</Dropdown.Item>
                   <Dropdown.Item eventKey="Dairy">Dairy</Dropdown.Item>
                   <Dropdown.Item eventKey="Wheat">Wheat</Dropdown.Item>
-                  <Dropdown.Item eventKey="Shell Fish">Shell Fish</Dropdown.Item>
+                  <Dropdown.Item eventKey="Shell Fish">
+                    Shell Fish
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               <Help />
@@ -181,6 +194,7 @@ function Food() {
               (food, index) => (
                 console.log(food),
                 (
+                  // card component with the 2 available card types
                   <CardComponent
                     name={food.name}
                     description={food.description}

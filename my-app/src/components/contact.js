@@ -20,6 +20,7 @@ function Contact(props) {
   const [profilesLoading, setProfilesLoading] = useState(false);
   const [filteredRecentProfiles, setFilteredRecentProfiles] = useState([]);
 
+  // this useEffect searches for the profiles in the profiles list
   useEffect(() => {
     axios
       .get(`http://localhost:3001/getAllProfiles?q=${search}`)
@@ -29,6 +30,7 @@ function Contact(props) {
       .catch((error) => console.error(error));
   }, [search]);
 
+  // this useEffect will get the recent profiles whom had a conversation with the logged in user
   useEffect(() => {
     axios
       .get(`http://localhost:3001/get/chat/msg/${userInfo?._id}`)
@@ -38,6 +40,7 @@ function Contact(props) {
       .catch((error) => console.error(error));
   }, [userInfo]);
 
+  /// this will remove the logged in user's id from the list
   useEffect(() => {
     if (recentProfilesId) {
       const recentChats = recentProfilesId.map((recentProfilesId) => {
@@ -45,11 +48,11 @@ function Contact(props) {
       });
       setRecentUserIds([...new Set(recentChats)]);
     }
-    console.log("Recent UserIds " + recentUserIds); //shows as undefined
   }, [recentProfilesId]);
 
   //Filtering the all profiles by the ids above to return the recent profiles
 
+  //the method below will add the profile data to the ids we got from the messages
   useEffect(() => {
     if (recentUserIds) {
       const filteredUsers = recentUserIds.map((ids) => {
@@ -58,14 +61,13 @@ function Contact(props) {
       setRecentProfile(filteredUsers);
       setRecentProfileSave(filteredUsers);
     }
-    console.log(recentProfiles); //shows undefined
   }, [recentUserIds]);
 
-const reversed = recentProfiles.reverse(); // reversing the profiles so it will list in order or recently started a conversation
+  const reversed = recentProfiles.reverse(); // reversing the profiles so it will list in order or recently started a conversation
 
+  // this useEffect will combine the names to let the search work for both the firstname and lastname
   useEffect(() => {
     if (recentProfiles && search) {
-        
       const flattenedProfiles = reversed.flat();
       const filteredProfiles = flattenedProfiles.filter((profile) => {
         const name = `${profile?.fName} ${profile?.lName}`;
@@ -78,6 +80,7 @@ const reversed = recentProfiles.reverse(); // reversing the profiles so it will 
     }
   }, [search, recentProfilesSave]);
 
+  // this will take the id of the selected user and search for its details to make it the current chat user
   useEffect(() => {
     axios
       .get(`http://localhost:3001/profileDetails/${id.id}`)
@@ -85,10 +88,12 @@ const reversed = recentProfiles.reverse(); // reversing the profiles so it will 
       .catch((error) => console.error(error));
   }, [id]);
 
+  // when the user clicks on a user icon it will set the currentChatUser to that
   const handleUser = (e) => {
     setCurrentChatUser(e);
   };
 
+  // if the users are loading it will show a loading icon
   useEffect(() => {
     if (!recentProfiles) {
       setProfilesLoading(true);
@@ -100,12 +105,12 @@ const reversed = recentProfiles.reverse(); // reversing the profiles so it will 
     }
   }, [recentProfiles]);
 
-
+  // this will be the returned statement
   return (
     <Row>
       <Col sm={4}>
         <div className="mainContactContainer">
-          {userInfo?.type == "admin" ? (
+          {userInfo?.type == "admin" ? ( // this will be shown if the user is an admin otherwise it will show the no search bar one
             <div style={{ width: "20px", padding: "10px" }}>
               <input
                 type="search"
@@ -117,12 +122,12 @@ const reversed = recentProfiles.reverse(); // reversing the profiles so it will 
                 }}
               />
             </div>
-           ) : (
-            "" 
-          )} ;
-
+          ) : (
+            ""
+          )}{" "}
+          ;
           <div className="userDetailsContainer">
-            {userInfo?.type == "admin" ? (
+            {userInfo?.type == "admin" ? ( // if the user is an admin it will show the users in a list of all of them
               <>
                 {profile?.map((user) => (
                   <div>
@@ -170,43 +175,50 @@ const reversed = recentProfiles.reverse(); // reversing the profiles so it will 
                   <LoadingSpinner />
                 ) : (
                   <>
-                  
+                    {/* if the user isnt an admin it will show the users who the logged in user has had a conversation with */}
                     {filteredRecentProfiles &&
-                      filteredRecentProfiles?.filter((user) => user[0]?.fName).reverse().map((user) => ( //filtering will remove undefined users and reversing the order so who the user has started a converation with more recently is shown at the top
-                        <div key={user[0]?.id}>
-                            <div
-                              className="userContainer"
-                              onClick={(e) => handleUser(user[0])}
-                            >
-                              <img
-                                src={user[0]?.pic}
-                                alt="userImage"
-                                className="chatUserImage"
-                              />
-                              <div style={{ marginLeft: "10px" }}>
-                                <p
-                                  style={{
-                                    textAlign: "start",
-                                    marginTop: "5px",
-                                    fontSize: "15px",
-                                  }}
-                                >
-                                  {user[0]?.fName + " " + user[0]?.lName}{" "}
-                                </p>
-                                <p
-                                  style={{
-                                    textAlign: "start",
-                                    marginTop: "-13px",
-                                    fontSize: "14px",
-                                  }}
-                                >
-                                  Open Message
-                                </p>
+                      filteredRecentProfiles
+                        ?.filter((user) => user[0]?.fName)
+                        .reverse()
+                        .map(
+                          (
+                            user //filtering will remove undefined users and reversing the order so who the user has started a converation with more recently is shown at the top
+                          ) => (
+                            <div key={user[0]?.id}>
+                              <div
+                                className="userContainer"
+                                onClick={(e) => handleUser(user[0])}
+                              >
+                                <img
+                                  src={user[0]?.pic}
+                                  alt="userImage"
+                                  className="chatUserImage"
+                                />
+                                <div style={{ marginLeft: "10px" }}>
+                                  <p
+                                    style={{
+                                      textAlign: "start",
+                                      marginTop: "5px",
+                                      fontSize: "15px",
+                                    }}
+                                  >
+                                    {user[0]?.fName + " " + user[0]?.lName}{" "}
+                                  </p>
+                                  <p
+                                    style={{
+                                      textAlign: "start",
+                                      marginTop: "-13px",
+                                      fontSize: "14px",
+                                    }}
+                                  >
+                                    Open Message
+                                  </p>
+                                </div>
                               </div>
+                              {/* //   )} */}
                             </div>
-                        {/* //   )} */}
-                        </div>
-                      ))}
+                          )
+                        )}
                   </>
                 )}
               </>

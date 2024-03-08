@@ -136,7 +136,6 @@ body {
 
 .Auth-form-container {
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   width: 100vw;
   height: 100vh;
@@ -186,6 +185,7 @@ label {
 .heading{
   padding: 10px;
   padding-left: 10px;
+  padding-top: 30px;
   font-family: 'Poppins', sans-serif;
 }
 
@@ -195,7 +195,6 @@ label {
 
 .itemCard{
   width: 18rem !important;
-  /* height: fit-content !important;  */
   text-align: center;
   padding: 1rem;
   margin-left: 20px;
@@ -222,8 +221,6 @@ label {
 }
 
 .chatListCol{
-  /* background-color: #fef7e5; */
-  
   width: auto;
   height: 500px;
 
@@ -236,7 +233,6 @@ label {
 
 }
 .chatBox{
-  /* padding:5px; */
   border: solid 1px;
   border-color: black;
 }
@@ -261,7 +257,6 @@ label {
 }
 
 .mainContactContainer{
-  /* display: flex; */
   flex: 0.7;
   background-color: grey;
   height: 100vh;
@@ -282,8 +277,6 @@ label {
 .chatUserImage{
   width: 7vh;
   height: 7vh;
-  /* margin-top: 1vh;
-  margin-bottom: 1vh; */
   text-align: center;
   margin-left: 1vh;
   border-radius: 50%;
@@ -330,8 +323,6 @@ label {
 .msgInput{
   width: 60pc;
   padding: 10px;
-  /* margin-right: 280px; */
-  /* height: 6vh; */
   margin-top: 0px;
   background-color: gray;
   color: white;
@@ -451,16 +442,12 @@ label {
   height: 40vh;
 }
 
-/* .homePageItems{
-  align-items: center;
-} */
-
 .profilePageIcon{
-  width: 3%;
+  width: 8%;
   height: 20%;
   align-items: right;
   cursor: pointer;
-  /* margin-left: 135vh; */
+  margin-left: 1vh;
 }
 
 .profilePageEditIcon{
@@ -499,7 +486,6 @@ label {
   height: 1px;
   background: black;
   width: 90%;
-  /* align-items: center; */
 
 }
 
@@ -513,9 +499,6 @@ label {
 
 
 .profileImage{
-  /* width: 50vh;
-  height: 40ch; */
-  /* border-radius: 50%; */
   object-fit: cover;
 }
 
@@ -572,10 +555,6 @@ label {
 }
 
 .profileCardImage{
-  /* width: auto !important;
-  height: fit-content !important;
-  object-fit:contain;
-  padding: 1vh; */
   width: auto !important;
   height: 30vh !important;
   object-fit:contain;

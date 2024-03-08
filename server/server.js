@@ -11,26 +11,25 @@ const foodModel = require("./models/food");
 const homeGoodsModel = require("./models/homeGoods");
 const profileModel = require("./models/profile");
 const { ObjectId } = require("mongodb");
-const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 const generateToken = require("./utils/generateToken");
 const messageModel = require("./models/message");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 
-app.use(cors());
-app.use(express.json());
+app.use(cors()); // cors allowing external resources
+app.use(express.json()); // allows for json payloads
 app.use(bodyParser.urlencoded({ extended: true }));
-app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: true }));
+app.set("view engine", "ejs"); // allows javascript with html
+app.use(express.urlencoded({ extended: true })); // helps with form data
 
-// app.use(notFound);
-// app.use(errorHandler);
-
+// the connection to mongo uses my name and password and the database name to connect to it
 (async () => {
   mongoose.connect(
     "mongodb+srv://jwoodburn01:Kju1Fn2TFEMHL9ti@wastenot.feclkon.mongodb.net/WasteNot"
   );
+
+  // this gets the slideshow data from mongo
   app.get("/getSlideshow", async (req, res) => {
     await slideshowModel
       .find()
@@ -38,6 +37,7 @@ app.use(express.urlencoded({ extended: true }));
       .catch((err) => res.json(err));
   });
 
+  // gets local charities using the search fror queries as well
   app.get("/getLocalCharities", async (req, res) => {
     const { q } = req.query;
     const keys = ["name"];
@@ -55,6 +55,7 @@ app.use(express.urlencoded({ extended: true }));
       .catch((err) => res.json(err));
   });
 
+  // gets the food items and lets the search bar filter it
   app.get("/getFood", async (req, res) => {
     const { q } = req.query;
     const keys = ["name"];
@@ -69,6 +70,7 @@ app.use(express.urlencoded({ extended: true }));
       .catch((err) => res.json(err));
   });
 
+  //this gets the home goods and works with the search bar
   app.get("/getHomeGoods", async (req, res) => {
     const { q } = req.query;
     const keys = ["name"];
@@ -85,6 +87,7 @@ app.use(express.urlencoded({ extended: true }));
       .catch((err) => res.json(err));
   });
 
+  // this sends the data collected in an add new form to be sent to the food model to add it to the database.
   app.post("/addFood", async (req, res) => {
     const food = new foodModel({
       name: req.body.name,
@@ -102,12 +105,13 @@ app.use(express.urlencoded({ extended: true }));
     });
 
     try {
-      await food.save();
+      await food.save(); // saving the item
     } catch (err) {
       console.log(err);
     }
   });
 
+  // same as above for the home goods here
   app.post("/addHomeGoods", async (req, res) => {
     const homeGoods = new homeGoodsModel({
       name: req.body.name,
@@ -122,7 +126,7 @@ app.use(express.urlencoded({ extended: true }));
       lighting: req.body.lighting,
       storage: req.body.storage,
       decor: req.body.decor,
-      miscellaneous: req.body.miscellaneous
+      miscellaneous: req.body.miscellaneous,
     });
 
     try {
@@ -132,6 +136,7 @@ app.use(express.urlencoded({ extended: true }));
     }
   });
 
+  // this fetches the food using the id as the reference to return the correct one
   app.get("/fetchFood/:id", async (req, res) => {
     fetchid = req.params.id;
     await foodModel
@@ -140,6 +145,7 @@ app.use(express.urlencoded({ extended: true }));
       .catch((err) => res.json(err));
   });
 
+  // finding a specific home good item using the id and returning it to the front end
   app.get("/fetchGoods/:id", async (req, res) => {
     fetchid = req.params.id;
     await homeGoodsModel
@@ -148,6 +154,7 @@ app.use(express.urlencoded({ extended: true }));
       .catch((err) => res.json(err));
   });
 
+  // adding a profile to the database
   app.post("/addProfile", async (req, res) => {
     const userAlreadyExists = await profileModel.findOne({
       email: req.body.email,
@@ -165,7 +172,7 @@ app.use(express.urlencoded({ extended: true }));
         password: req.body.password,
         type: req.body.type,
         pic: req.body.pic,
-        token: generateToken(req.body.id),
+        token: generateToken(req.body.id), // making a new token for the session
       });
 
       try {
@@ -176,6 +183,7 @@ app.use(express.urlencoded({ extended: true }));
     }
   });
 
+  // authenticting the profile when the user tried to login
   app.post("/authProfile", async (req, res) => {
     const { email, password } = req.body;
     const user = await profileModel.findOne({ email });
@@ -198,6 +206,7 @@ app.use(express.urlencoded({ extended: true }));
     }
   });
 
+  // the update profile one can take a new entry if any or the old data if no data is entered
   app.post("/updateProfile", async (req, res) => {
     id = req.body.id;
 
@@ -229,6 +238,7 @@ app.use(express.urlencoded({ extended: true }));
     }
   });
 
+  // this finds and returns a specific profile
   app.get("/profileDetails/:id", async (req, res) => {
     try {
       const id = req.params;
@@ -240,6 +250,7 @@ app.use(express.urlencoded({ extended: true }));
     }
   });
 
+  // this remoces the item with the matching id from the database, it 1st checks the food and if it isnt there it will go to the home goods
   app.delete("/removeItem/:id", async (req, res) => {
     const id = req.params.id;
     console.log(id);
@@ -260,16 +271,9 @@ app.use(express.urlencoded({ extended: true }));
       console.log(err);
       res.sendStatus(500);
     }
-
-    // try {
-    //   await homeGoodsModel.findByIdAndRemove(id);
-    //   res.send({status: "OK"});
-    // } catch (err) {
-    //   console.log(err);
-    //   res.sendStatus(500);
-    // }
   });
 
+  // this takes the data from the front end and sends it to the charity model to be added to the db
   app.post("/addCharity", async (req, res) => {
     const localCharity = new localCharitiesModel({
       name: req.body.name,
@@ -285,6 +289,7 @@ app.use(express.urlencoded({ extended: true }));
     }
   });
 
+  // this will remove a charity based on its id
   app.delete("/removeCharity/:id", async (req, res) => {
     const id = req.params.id;
 
@@ -297,6 +302,7 @@ app.use(express.urlencoded({ extended: true }));
     }
   });
 
+  // this updated an item and like the other one can take either a new value or can keep the old value. It checks both collections as well for the item
   app.post("/updateItem", async (req, res) => {
     id = req.body.id;
 
@@ -305,6 +311,11 @@ app.use(express.urlencoded({ extended: true }));
     if (foodItem) {
       foodItem.name = req.body.name || foodItem.name;
       foodItem.description = req.body.description || foodItem.description;
+      foodItem.dairy = req.body.allergenList.dairy;
+      foodItem.wheat = req.body.allergenList.wheat;
+      foodItem.nuts = req.body.allergenList.nuts;
+      foodItem.shellFish = req.body.allergenList.shellFish;
+      foodItem.egg = req.body.allergenList.egg;
       foodItem.image = req.body.image || foodItem.image;
       foodItem.location = req.body.location || foodItem.location;
       foodItem.reserved = req.body.reserved || foodItem.reserved;
@@ -348,6 +359,7 @@ app.use(express.urlencoded({ extended: true }));
     }
   });
 
+  // this adds a message to the db with the data from the front end
   app.post("/msg", async (req, res) => {
     try {
       const { from, to, message } = req.body;
@@ -364,6 +376,7 @@ app.use(express.urlencoded({ extended: true }));
     }
   });
 
+  // this gets a char based on the users who sent and recieved it, using the 2 ids as a to and from
   app.get("/get/chat/msg/:user1Id/:user2Id", async (req, res) => {
     try {
       const from = req.params.user1Id;
@@ -390,6 +403,7 @@ app.use(express.urlencoded({ extended: true }));
     }
   });
 
+  // this will return chats based on 1 of the ids
   app.get("/get/chat/msg/:userId", async (req, res) => {
     const userId = req.params.userId;
     const messages = await messageModel
@@ -406,6 +420,7 @@ app.use(express.urlencoded({ extended: true }));
     res.json(formattedMessages);
   });
 
+  // this will return all of the profiles in one list and can be searched using the name as the query
   app.get("/getAllProfiles", async (req, res) => {
     const { q } = req.query;
     const search = (data) => {
@@ -420,6 +435,7 @@ app.use(express.urlencoded({ extended: true }));
       .catch((err) => res.json(err));
   });
 
+  // returns all of the users
   app.get("/getAllUsers", async (req, res) => {
     await profileModel
       .find()
@@ -427,6 +443,7 @@ app.use(express.urlencoded({ extended: true }));
       .catch((err) => res.json(err));
   });
 
+  // can remove a user with their id
   app.delete("/removeUser/:id", async (req, res) => {
     const id = req.params.id;
 
@@ -439,6 +456,7 @@ app.use(express.urlencoded({ extended: true }));
     }
   });
 
+  // the forgot password section takes an email and will send them an email with a link to a reset password form, which is got to with a token that is sent as part of the url
   app.post("/forgotPassword", async (req, res) => {
     const { email } = req.body;
     try {
@@ -446,9 +464,9 @@ app.use(express.urlencoded({ extended: true }));
       if (!user) {
         return res.json({ status: "Email not linked to account!" });
       }
-      const secret = process.env.JWT_SECRET + user.password;
+      const secret = process.env.JWT_SECRET + user.password; // creates a new jwt secret token
       const token = jwt.sign({ email: user.email, id: user._id }, secret, {
-        expiresIn: "60m",
+        expiresIn: "60m", // times out in 60mins
       });
       const link = `http://localhost:3001/resetPassword/${user._id}/${token}`;
       var transporter = nodemailer.createTransport({
@@ -458,6 +476,7 @@ app.use(express.urlencoded({ extended: true }));
           pass: "naxl ixjg kbij izpj",
         },
       });
+      // the transport uses my email to send the email
 
       var mailOptions = {
         from: "youremail@gmail.com",
@@ -476,6 +495,7 @@ app.use(express.urlencoded({ extended: true }));
     } catch (error) {}
   });
 
+  // this authenticates the user and renders the reset form
   app.get("/resetPassword/:id/:token", async (req, res) => {
     const { id, token } = req.params;
     console.log(req.params);
@@ -492,6 +512,7 @@ app.use(express.urlencoded({ extended: true }));
     }
   });
 
+  // this takes the new password and assigns it to the account
   app.post("/resetPassword/:id/:token", async (req, res) => {
     const { id, token } = req.params;
     const { password, confirmPassword } = req.body;
@@ -511,14 +532,13 @@ app.use(express.urlencoded({ extended: true }));
         const updatedUser = await user.save();
 
         res.json("Password Changed, now try to login");
-        // res.render("index",{email:verify.email, status:"verified"})
       }
-      // res.json("Passwords Do Not Match")
     } catch (error) {
       console.log(error);
-      // res.json("Something went wrong")
     }
   });
+
+  // gets the server to run on port 3001
   const server = app.listen(3001, () => {
     console.log("Server is running");
   });
@@ -537,6 +557,7 @@ app.use(express.urlencoded({ extended: true }));
       onlineUsers.set(id, socket.id);
     });
 
+    // socket.io to send the messages in real time allowing them to update as the user sees them without reloads
     socket.on("send-msg", (data) => {
       const sendUserSocket = onlineUsers.get(data.to);
       if (sendUserSocket) {
