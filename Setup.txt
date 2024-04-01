@@ -1,0 +1,22 @@
+How to set up React, node and NPM on your system.
+
+Install node
+    - https://nodejs.org/en/blog/release/v14.20.0 
+
+Open my server and run
+- cd server
+- npm run dev
+
+When code is in 
+    - cd server
+    - npm install
+
+    - cd my-app
+    - npm install
+
+Open my app and run 
+    - cd my-app 
+    - npm start
+
+If any errors arise when running, likely another npm install will help, sometimes it doesnt install everything
+Else, message me. 

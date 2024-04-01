@@ -22,3 +22,4 @@ John Woodburn
 - Reserve Items
 - Message Users via Chat System
 - Email Users
+- Report Users

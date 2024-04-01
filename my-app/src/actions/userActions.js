@@ -43,7 +43,7 @@ export const loginSubmission =(email, password) => async (dispatch) => {
   // the logout to be used in the nav bar and the profile page
   export const logout = () => async (dispatch) => {
   const logOutToast = () => toast.success("Logout Successful");
-    localStorage.removeItem("userInfo"); // it removed the data from the local storage
+    localStorage.removeItem("userInfo"); // it removes the data from the local storage
     dispatch({type: USER_LOGOUT});
     logOutToast();
 
@@ -69,7 +69,6 @@ export const loginSubmission =(email, password) => async (dispatch) => {
         })
 
             // Once posted, the user will be notified 
-            // alert('You have been added to the system!');
             registerToast();
 
             dispatch({type: USER_REGISTER_SUCCESS, payload: data});
