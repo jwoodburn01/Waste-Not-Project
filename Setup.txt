@@ -20,3 +20,5 @@ Open my app and run
 
 If any errors arise when running, likely another npm install will help, sometimes it doesnt install everything
 Else, message me. 
+
+Have tested it with a backup, all i did was cd server and run npm run dev, the server started. Then i had to cd my-app and run npm install before i ran the npm start. 
