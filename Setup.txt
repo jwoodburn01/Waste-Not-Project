@@ -1,5 +1,7 @@
 How to set up React, node and NPM on your system.
 
+Point to note MongoDB does not work on the QUB Wifi due to the firewall, it will work on the Guest wifi or a home wifi though. 
+
 Install node
     - https://nodejs.org/en/blog/release/v14.20.0 
 

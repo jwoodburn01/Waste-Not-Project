@@ -448,7 +448,9 @@ app.use(express.urlencoded({ extended: true })); // helps with form data
     const id = req.params.id;
 
     try {
-      await profileModel.findByIdAndRemove(id);
+      await foodModel.deleteMany({ userId: id }); // remove food owned by the user
+      await homeGoodsModel.deleteMany({ userId: id }); // remove home goods owned by the user
+      await profileModel.findByIdAndRemove(id); // remove the user
       res.send({ status: "OK" });
     } catch (err) {
       console.log(err);

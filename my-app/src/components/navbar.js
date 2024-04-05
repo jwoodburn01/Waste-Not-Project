@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import ProfilesModal from "./profilesModal";
 import useConfirm from "./confirmDialogue";
+import Help from "./helpButton";
 
 // this nav bar will be shown throughout and will allow the user to navigate through my website as well as access functions like remove account and login/out
 // this nav bar can also turn into a side bar depending on the window size
@@ -133,6 +134,7 @@ const NavigationBar = () => {
               {profileLink}
               <Dialog />
             </li>
+            <Help width="3vh" height="3vh"/>
           </ul>
         </div>
       </div>

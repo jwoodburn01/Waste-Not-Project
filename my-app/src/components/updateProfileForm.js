@@ -34,7 +34,6 @@ function UpdateProfileForm() {
       setfName(userInfo.fName);
       setlName(userInfo.lName);
       setEmail(userInfo.email);
-      setPic(userInfo.pic)
     }
   },[userInfo])
 

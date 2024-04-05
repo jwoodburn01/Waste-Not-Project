@@ -176,16 +176,14 @@ function Food() {
 
                 <Dropdown.Menu>
                   <Dropdown.Item eventKey="">Select</Dropdown.Item>
-                  <Dropdown.Item eventKey="Nuts">Nuts</Dropdown.Item>
-                  <Dropdown.Item eventKey="Eggs">Eggs</Dropdown.Item>
-                  <Dropdown.Item eventKey="Dairy">Dairy</Dropdown.Item>
-                  <Dropdown.Item eventKey="Wheat">Wheat</Dropdown.Item>
-                  <Dropdown.Item eventKey="Shell Fish">
-                    Shell Fish
-                  </Dropdown.Item>
+                  <Dropdown.Item eventKey="Nuts">No <b>Nuts</b></Dropdown.Item>
+                  <Dropdown.Item eventKey="Eggs">No <b>Eggs</b></Dropdown.Item>
+                  <Dropdown.Item eventKey="Dairy">No <b>Dairy</b></Dropdown.Item>
+                  <Dropdown.Item eventKey="Wheat">No <b>Wheat</b></Dropdown.Item>
+                  <Dropdown.Item eventKey="Shell Fish">No <b>Shell Fish</b></Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              <Help />
+              <Help width="4vh" height="4vh" />
             </ButtonGroup>
             <ColoredLine />
           </Row>

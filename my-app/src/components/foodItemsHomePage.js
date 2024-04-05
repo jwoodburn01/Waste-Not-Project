@@ -3,12 +3,16 @@ import CardComponent from "../components/card";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import LoadingSpinner from "../components/loading";
+import { useSelector } from "react-redux";
+
 
 function FoodItemsHomePage() {
   const [food, setFood] = useState([]);
   const [availableFood, setAvailableFood] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   // this file creates the food items for the home page
   useEffect(() => {
@@ -36,7 +40,7 @@ function FoodItemsHomePage() {
             name={food.name}
             description={food.description}
             image={food.image}
-            itemLink={(event) => (window.location.href = "/item/" + food._id)}
+            itemLink={(event) => (userInfo ? window.location.href = "/item/" + food._id : "/")}
             location={food.location}
             id={food._id}
             dairy={food?.dairy}

@@ -1,7 +1,7 @@
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import guide from "../guide/Waste Not - Manual.pdf";
 
-function Help() {
+function Help({width, height}) {
   // this file shows a help button in which will download my manual for the user
   const onButtonClick = () => {
     // using Java Script method to get PDF file
@@ -23,7 +23,7 @@ function Help() {
     <IoMdHelpCircleOutline
       className="iconButton"
       onClick={onButtonClick}
-      style={{ height: "4vh", width: "4vh" }}
+      style={{  height: `${height}`, width: `${width}` }}
     />
   );
 }

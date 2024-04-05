@@ -35,13 +35,13 @@ function InputItemForm() {
   // creating the toasts to be used for success and fail
   const successToast = () => toast.success("Item Added");
   const failedToast = () => toast.error("Error, Item Failed to Add");
-  const errorToast = () => toast.error("Error, Please fill in all fields");
+  const errorToast = () => toast.error("Error, Please fill in all fields, ensure the image is JPG or PNG");
 
   // the handle submit below works for both food and home goods
   // using the type dropdown it uses the different url for each and sends the entered data to it.
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!type || !name || !location) {
+    if (!type || !name || !location || !pic) {
       errorToast();
     } else {
       try {

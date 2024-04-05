@@ -32,6 +32,7 @@ function ItemPage() {
   const [Dialog, confirmDelete] = useConfirm("Are you sure?", message);
 
   useEffect(() => {
+  const userInfo = localStorage.getItem("userInfo");
     if (!userInfo) {
       navigate("/");
     }

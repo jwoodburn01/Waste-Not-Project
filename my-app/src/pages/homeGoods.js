@@ -189,7 +189,7 @@ function HomeGoods() {
                   ))}
                 </Dropdown.Menu>
               </Dropdown>
-              <Help />
+              <Help width="4vh" height="4vh"/>
             </ButtonGroup>
 
             <ColoredLine />

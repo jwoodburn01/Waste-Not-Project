@@ -3,6 +3,8 @@ import CardComponent from "./card"
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import LoadingSpinner from './loading';
+import { useSelector } from "react-redux";
+
 
 function HomeGoodsHomePage() {
 
@@ -10,6 +12,8 @@ function HomeGoodsHomePage() {
   const [availableGoods, setAvailableGoods] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   // this gets the list of home goods
   useEffect(() => {
@@ -36,7 +40,7 @@ function HomeGoodsHomePage() {
               name={homeGoods.name}
               description={homeGoods.description}
               image={homeGoods.image}
-              itemLink={event => window.location.href = '/item/' + homeGoods._id}
+              itemLink={(event) => (userInfo ? window.location.href = "/item/" + homeGoods._id : "/")} 
               location={homeGoods.location}
             />
         ))} 
