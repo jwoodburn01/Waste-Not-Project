@@ -311,15 +311,17 @@ app.use(express.urlencoded({ extended: true })); // helps with form data
     if (foodItem) {
       foodItem.name = req.body.name || foodItem.name;
       foodItem.description = req.body.description || foodItem.description;
-      foodItem.dairy = req.body.allergenList.dairy;
-      foodItem.wheat = req.body.allergenList.wheat;
-      foodItem.nuts = req.body.allergenList.nuts;
-      foodItem.shellFish = req.body.allergenList.shellFish;
-      foodItem.egg = req.body.allergenList.egg;
       foodItem.image = req.body.image || foodItem.image;
       foodItem.location = req.body.location || foodItem.location;
       foodItem.reserved = req.body.reserved || foodItem.reserved;
       foodItem.reservedBy = req.body.reservedBy || foodItem.reservedBy;
+      if (req.body.allergenList) {
+        foodItem.dairy = req.body.allergenList.dairy || foodItem.dairy;
+        foodItem.wheat = req.body.allergenList.wheat || foodItem.wheat;
+        foodItem.nuts = req.body.allergenList.nuts || foodItem.nuts;
+        foodItem.shellFish = req.body.allergenList.shellFish || foodItem.shellFish;
+        foodItem.egg = req.body.allergenList.egg || foodItem.egg;
+      }
 
       const updatedItem = await foodItem.save();
 
